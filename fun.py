@@ -146,13 +146,19 @@ def eliminar_file(memoria, tabla_file):
 
 def desfragmentar(memoria, tabla_file, conf):
     memoria_aux = memoria
+    file_critico = memoria[-1]['id_file']
 
     for (indice,file) in enumerate(memoria):
         size = file['size']
         memoria_aux[indice] = {'id_file': 0, 'no_parte': 0, 'ocupado': 0, 'size':size}
 
     for file in tabla_file:
-        add_memoria (memoria_aux, file, conf)
+        if file['id'] != file_critico:
+            add_memoria (memoria_aux, file, conf)
+
+    for file in tabla_file:
+        if file['id'] == file_critico:
+            add_memoria (memoria_aux, file, conf)
 
     return memoria_aux
 

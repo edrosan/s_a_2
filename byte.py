@@ -15,22 +15,38 @@ def opc_byte(configuracion):
         print("3.Desfragmentar")
         print("4.Visualizar")
         print("5.Salir")
-        opc = int(input("Ingresa una opcion: "))
+        try:
+            opc = int(input("Ingresa una opcion: "))
+        except ValueError:
+            opc = 0
 
         if (opc == 1):
-            file_name = str(input("Ingrese nombre del archivo: "))
-            file_size = int(input("Ingrese el tamaño del archivo: "))
+            
+            
+            file_name = input("Ingrese nombre del archivo: ")
+            try:
+                file_name[0].upper()
+            except:
+                file_name = "undf"
 
-            espacio_disponible = espacio_memoria(espacio_disponible=info_ram['disponible'], file_size=file_size)
+            try:
+                file_size = int(input("Ingrese el tamaño del archivo: "))
+            except ValueError:
+                file_size = 0
 
-            if espacio_disponible:
-                bloques_file = bloques_usados(size_bloque=configuracion['size_bloque'], file_size=file_size)
-                file = archivo_nuevo (nombre=file_name, file_size=file_size, bloques_usados=bloques_file)
-                tabla_file.append(file)
-                ram = add_memoria (ram, file, configuracion)
-                info_ram = actualizar_info(info_ram, ram)
+            if file_size > 0:
+                espacio_disponible = espacio_memoria(espacio_disponible=info_ram['disponible'], file_size=file_size)
+
+                if espacio_disponible:
+                    bloques_file = bloques_usados(size_bloque=configuracion['size_bloque'], file_size=file_size)
+                    file = archivo_nuevo (nombre=file_name, file_size=file_size, bloques_usados=bloques_file)
+                    tabla_file.append(file)
+                    ram = add_memoria (ram, file, configuracion)
+                    info_ram = actualizar_info(info_ram, ram)
+                else:
+                    print('Espacion no disponible')
             else:
-                print('Espacion no disponible')
+                print("Valor de tamaño no valido")
         
         elif (opc == 2):
             (ram, tabla_file) = eliminar_file(ram, tabla_file)
@@ -43,7 +59,11 @@ def opc_byte(configuracion):
             print("1.Memoria")
             # print("2.Mapa")
             print("2.Listas")
-            opc = int(input("Ingresa una opcion: "))
+            try:
+                opc = int(input("Ingresa una opcion: "))
+            except ValueError:
+                opc = 0
+            
 
             if (opc == 1):
                 print()
@@ -64,5 +84,7 @@ def opc_byte(configuracion):
         elif (opc == 5):
             run = False
             return run
+        else:
+            print("Vuelve a ingresar una opcion")
 
 
