@@ -1,8 +1,5 @@
 from fun import *
 
-
-
-
 def opc_byte(configuracion):
     run = True
     (total_bloques, ultimo_bloque) = cant_bloques(configuracion['size_memoria'], configuracion['size_bloque'])
@@ -27,13 +24,11 @@ def opc_byte(configuracion):
             espacio_disponible = espacio_memoria(espacio_disponible=info_ram['disponible'], file_size=file_size)
 
             if espacio_disponible:
-
                 bloques_file = bloques_usados(size_bloque=configuracion['size_bloque'], file_size=file_size)
                 file = archivo_nuevo (nombre=file_name, file_size=file_size, bloques_usados=bloques_file)
                 tabla_file.append(file)
                 ram = add_memoria (ram, file, configuracion)
                 info_ram = actualizar_info(info_ram, ram)
-                
             else:
                 print('Espacion no disponible')
         
@@ -63,7 +58,11 @@ def opc_byte(configuracion):
                 for nodo in lista_memoria:
                     print(f"{nodo}->", end="")
                 print()
+                print()
+                lista_archivo (ram)
 
         elif (opc == 5):
             run = False
             return run
+
+

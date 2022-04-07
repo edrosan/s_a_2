@@ -179,7 +179,7 @@ def lista_nombre (ram):
                 posFinal = i-1
                 posInicial = posFinal-contProce+1
                 tam_proceso = (posFinal - posInicial) + 1
-                lista.append([str(procesoActual),size_actual,posInicial,posFinal])
+                lista.append([str(procesoActual),posInicial,posFinal])
                 contProce = 0
         elif (elemento['id_file'] != 0):  
             if (contHueco != 0):
@@ -200,7 +200,7 @@ def lista_nombre (ram):
                     posFinal = i-1
                     posInicial = posFinal-contProce+1
                     tam_proceso = (posFinal - posInicial) + 1
-                    lista.append([str(procesoActual),size_actual,posInicial,posFinal])
+                    lista.append([str(procesoActual),posInicial,posFinal])
                     contProce = 0
                     procesoActual = elemento['id_file']
                     parte_actual = elemento['no_parte']
@@ -217,6 +217,21 @@ def lista_nombre (ram):
         posFinal = tam-1
         posInicial = posFinal-contProce+1
         tam_proceso = (posFinal - posInicial) + 1
-        lista.append([str(ram[-1]['id_file']),ram[-1]['ocupado'],posInicial,posFinal])
+        lista.append([str(ram[-1]['id_file']),posInicial,posFinal])
         contProce = 0
     return lista 
+
+
+def lista_archivo (memoria):
+    id_file = -1
+    memoria_original = memoria
+    memoria_aux = memoria
+
+    for (indice,file) in enumerate(memoria_aux):
+        if file['id_file'] != 0 and id_file != file['id_file'] and file['no_parte'] == 0:
+            id_file = file['id_file']
+            for file in memoria_aux:
+                if id_file == file['id_file']:
+                    print(f"{file['id_file']}:{file['no_parte']}-> ", end="")
+                    # memoria_aux[indice]['id_file'] = 0
+            print()
